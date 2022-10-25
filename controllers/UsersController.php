@@ -29,8 +29,8 @@ class UsersController extends Controller
     {
         $query = Users::find();
 
-        # SELECT COUNT(Tags), Tags FROM users GROUP BY Tags;
-        $tags = $query->select('Tags')->groupBy('Tags')->all();
+        # SELECT COUNT(Tags), Tags FROM users GROUP BY Tags;  <--Query su cui ho basato quella seguente, non ho saputo trovare di meglio
+        $tags = $query->select('Tags, COUNT(*) as count')->groupBy('Tags')->orderBy(['count' => SORT_DESC])->asArray()->all();
 
         return $this->render('tags', [
             'tags' => $tags
